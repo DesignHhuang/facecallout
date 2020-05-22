@@ -1,0 +1,15 @@
+.DS_Store
+
+.idea
+.classpath
+.project
+*.iml
+*.eml
+target
+*.log
+*.log.*
+generatorConfig.xml
+*.cache
+*.lock
+/build/
+*.settings
