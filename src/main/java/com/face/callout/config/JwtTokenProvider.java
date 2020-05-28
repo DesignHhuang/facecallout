@@ -2,11 +2,8 @@ package com.face.callout.config;
 
 import java.util.Base64;
 import java.util.Date;
-import java.util.Set;
-
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-
 import com.face.callout.entity.Role;
 import com.face.callout.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +35,8 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(String username, Set<Role> set) {
-        Claims claims = Jwts.claims().setSubject(username);
+    public String createToken(String mobile, Role set) {
+        Claims claims = Jwts.claims().setSubject(mobile);
         claims.put("roles", set);
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);

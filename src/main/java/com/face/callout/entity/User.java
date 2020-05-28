@@ -1,8 +1,6 @@
 package com.face.callout.entity;
 
 import java.util.Date;
-import java.util.Set;
-
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -14,7 +12,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
 
     @Column(unique = true, nullable = false)
     private String email;
@@ -32,7 +30,7 @@ public class User {
     // roles
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
-    private Set<Role> roles;
+    private Role role;
 
     //创建时间
     @Column(nullable = false, updatable = false)
@@ -40,11 +38,11 @@ public class User {
     @CreatedDate
     private Date createdAt;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -72,12 +70,12 @@ public class User {
         this.fullname = fullname;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getNickname() {

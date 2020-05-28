@@ -1,3 +1,4 @@
+/*
 package com.face.callout.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,3 +12,4 @@ public class SecrityConfig {
         auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
     }
 }
+*/

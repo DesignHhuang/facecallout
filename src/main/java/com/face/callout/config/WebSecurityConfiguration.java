@@ -1,3 +1,4 @@
+/*
 package com.face.callout.config;
 
 import org.springframework.context.annotation.Configuration;
@@ -19,4 +20,4 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .anyRequest().authenticated();
     }
 
-}
+}*/

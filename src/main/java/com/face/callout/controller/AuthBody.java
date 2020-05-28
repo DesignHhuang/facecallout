@@ -2,14 +2,14 @@ package com.face.callout.controller;
 
 public class AuthBody {
 
-	private String email;
+	private String mobile;
     private String password;
 
-	public String getEmail() {
-		return email;
+	public String getMobile() {
+		return mobile;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 	public String getPassword() {
 		return password;

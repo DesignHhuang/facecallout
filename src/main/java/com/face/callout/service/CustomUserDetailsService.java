@@ -1,11 +1,9 @@
 package com.face.callout.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import com.face.callout.entity.Role;
 import com.face.callout.entity.User;
 import com.face.callout.repository.RoleRepository;
@@ -35,36 +33,38 @@ public class CustomUserDetailsService implements UserDetailsService {
 	    return userRepository.findByEmail(email);
 	}
 
+	public User findUserByEmailOrMobile(String email,String mobile) {
+		return userRepository.findByEmailOrMobile(email,mobile);
+	}
+
 	public void saveUser(User user) {
 	    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 	    Role userRole = roleRepository.findByRole("ADMIN");
-	    user.setRoles(new HashSet<>(Arrays.asList(userRole)));
+	    user.setRole(userRole);
 	    userRepository.save(user);
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String mobile) throws UsernameNotFoundException {
 
-	    User user = userRepository.findByEmail(email);
+	    User user = userRepository.findByMobile(mobile);
 	    if(user != null) {
-	        List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
+	        List<GrantedAuthority> authorities = getUserAuthority(user.getRole());
 	        return buildUserForAuthentication(user, authorities);
 	    } else {
 	        throw new UsernameNotFoundException("username not found");
 	    }
 	}
 
-	private List<GrantedAuthority> getUserAuthority(Set<Role> userRoles) {
+	private List<GrantedAuthority> getUserAuthority(Role userRole) {
 	    Set<GrantedAuthority> roles = new HashSet<>();
-	    userRoles.forEach((role) -> {
-	        roles.add(new SimpleGrantedAuthority(role.getRole()));
-	    });
+	    roles.add(new SimpleGrantedAuthority(userRole.getRole()));
 
 	    List<GrantedAuthority> grantedAuthorities = new ArrayList<>(roles);
 	    return grantedAuthorities;
 	}
 
 	private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
-	    return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+	    return new org.springframework.security.core.userdetails.User(user.getMobile(), user.getPassword(), authorities);
 	}
 }

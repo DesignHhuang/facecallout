@@ -2,6 +2,7 @@ package com.face.callout.config;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.face.callout.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +17,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
-
-import com.djamware.springangularauth.services.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -37,8 +36,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.httpBasic().disable().csrf().disable().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers("/api/auth/login").permitAll().antMatchers("/api/auth/register").permitAll()
-				.antMatchers("/api/products/**").hasAuthority("ADMIN").anyRequest().authenticated().and().csrf()
+				.antMatchers("/api/v1/auth/login").permitAll().antMatchers("/api/v1/auth/register").permitAll()
+				.antMatchers("/api/v1/products/**").hasAuthority("ADMIN").anyRequest().authenticated().and().csrf()
 				.disable().exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint()).and()
 				.apply(new JwtConfigurer(jwtTokenProvider));
 		http.cors();
