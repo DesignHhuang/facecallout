@@ -22,7 +22,7 @@ import java.util.List;
 
 @CrossOrigin(maxAge = 3600)
 @RestController
-@RequestMapping("/api/v1/facemark")
+@RequestMapping("/api/facemark")
 public class FaceMarkController {
 
     @Autowired

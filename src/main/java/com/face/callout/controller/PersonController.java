@@ -20,7 +20,7 @@ import javax.validation.Valid;
 
 @CrossOrigin(maxAge = 3600)
 @RestController
-@RequestMapping("/api/v1/person")
+@RequestMapping("/api/person")
 public class PersonController {
 
     @Autowired
