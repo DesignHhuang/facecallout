@@ -2,8 +2,10 @@ package com.face.callout.entity;
 
 import java.util.Date;
 import java.util.Set;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 
 @Entity
@@ -53,11 +55,14 @@ public class User {
     //地址
     private String address;
 
+    //个人简介
+    private String profile;
+
     //是否删除
     private boolean isdeleted;
 
     // roles
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "SysRoleMap", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roleList;
 
@@ -193,5 +198,13 @@ public class User {
 
     public void setRoleList(Set<Role> roleList) {
         this.roleList = roleList;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 }
