@@ -42,7 +42,7 @@ public class AuthController {
 		try {
 			String username = data.getMobile();
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
-			String token = jwtTokenProvider.createToken(username, this.users.findByMobile(username).getRole());
+			String token = jwtTokenProvider.createToken(username, this.users.findByMobile(username).getRoleList());
 			Map<Object, Object> model = new HashMap<>();
 			model.put("mobile", username);
 			model.put("token", token);
@@ -62,11 +62,15 @@ public class AuthController {
 		User userExists = userService.findUserByEmailOrMobile(user.getEmail(),user.getMobile());
 		Map<Object, Object> model = new HashMap<>();
 		if (userExists != null) {
+			model.put("success", 0);
 			model.put("message", "注册的邮箱或手机号已经被使用");
+			model.put("user",user);
 			return RestResultBuilder.builder().failure(model).build();
 		}else{
 			userService.saveUser(user);
+			model.put("success", 1);
 			model.put("message", "用户注册成功");
+			model.put("user",user);
 			return RestResultBuilder.builder().success(model).build();
 		}
 	}

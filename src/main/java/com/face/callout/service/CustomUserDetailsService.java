@@ -1,9 +1,7 @@
 package com.face.callout.service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 import com.face.callout.entity.Role;
 import com.face.callout.entity.User;
 import com.face.callout.repository.RoleRepository;
@@ -40,7 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public void saveUser(User user) {
 	    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 	    Role userRole = roleRepository.findByRole("ADMIN");
-	    user.setRole(userRole);
+	    user.setRoleList(new HashSet<>(Arrays.asList(userRole)));
 	    userRepository.save(user);
 	}
 
@@ -49,16 +47,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	    User user = userRepository.findByMobile(mobile);
 	    if(user != null) {
-	        List<GrantedAuthority> authorities = getUserAuthority(user.getRole());
+	        List<GrantedAuthority> authorities = getUserAuthority(user.getRoleList());
 	        return buildUserForAuthentication(user, authorities);
 	    } else {
 	        throw new UsernameNotFoundException("username not found");
 	    }
 	}
 
-	private List<GrantedAuthority> getUserAuthority(Role userRole) {
+	private List<GrantedAuthority> getUserAuthority(Set<Role> userRole) {
 	    Set<GrantedAuthority> roles = new HashSet<>();
-	    roles.add(new SimpleGrantedAuthority(userRole.getRole()));
+		userRole.forEach((role) -> {
+			roles.add(new SimpleGrantedAuthority(role.getRole()));
+		});
 
 	    List<GrantedAuthority> grantedAuthorities = new ArrayList<>(roles);
 	    return grantedAuthorities;

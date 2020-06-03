@@ -1,9 +1,9 @@
 package com.face.callout.entity;
 
 import java.util.Date;
+import java.util.Set;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import javax.persistence.*;
 
 @Entity
@@ -14,23 +14,52 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    //邮箱
     @Column(unique = true, nullable = false)
     private String email;
 
+    //密码
     private String password;
 
+    //真实姓名
     private String fullname;
 
+    //昵称
     private String nickname;
 
+    //手机号码
     private String mobile;
 
+    //头像
+    private String avatar;
+
+    //签名
+    private String signature;
+
+    //头衔
+    private String title;
+
+    //集团
+    private String org_group;
+
+    //标签
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "TagMap", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Set<Tag> tagList;
+
+    //国家
+    private String country;
+
+    //地址
+    private String address;
+
+    //是否删除
     private boolean isdeleted;
 
     // roles
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id", nullable = false)
-    private Role role;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "SysRoleMap", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roleList;
 
     //创建时间
     @Column(nullable = false, updatable = false)
@@ -70,14 +99,6 @@ public class User {
         this.fullname = fullname;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     public String getNickname() {
         return nickname;
     }
@@ -108,5 +129,69 @@ public class User {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getOrg_group() {
+        return org_group;
+    }
+
+    public void setOrg_group(String org_group) {
+        this.org_group = org_group;
+    }
+
+    public Set<Tag> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(Set<Tag> tagList) {
+        this.tagList = tagList;
+    }
+
+    public Set<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(Set<Role> roleList) {
+        this.roleList = roleList;
     }
 }

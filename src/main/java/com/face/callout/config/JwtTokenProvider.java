@@ -2,6 +2,7 @@ package com.face.callout.config;
 
 import java.util.Base64;
 import java.util.Date;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import com.face.callout.entity.Role;
@@ -35,7 +36,7 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(String mobile, Role set) {
+    public String createToken(String mobile, Set<Role> set) {
         Claims claims = Jwts.claims().setSubject(mobile);
         claims.put("roles", set);
         Date now = new Date();
