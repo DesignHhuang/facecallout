@@ -49,6 +49,11 @@ public class User {
     @JoinTable(name = "TagMap", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tagList;
 
+    //团队
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "TeamMap", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+    private Set<Team> teamList;
+
     //国家
     private String country;
 
@@ -206,5 +211,13 @@ public class User {
 
     public void setProfile(String profile) {
         this.profile = profile;
+    }
+
+    public Set<Team> getTeamList() {
+        return teamList;
+    }
+
+    public void setTeamList(Set<Team> teamList) {
+        this.teamList = teamList;
     }
 }
