@@ -53,6 +53,7 @@ public class AuthController {
             Map<Object, Object> model = new HashMap<>();
             model.put("mobile", username);
             model.put("token", token);
+            model.put("user", this.users.findByMobile(username));
             return RestResultBuilder.builder().success(model).build();
         } catch (AuthenticationException e) {
             String mobile = data.getMobile();
