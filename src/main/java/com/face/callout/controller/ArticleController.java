@@ -6,6 +6,9 @@ import com.face.callout.entity.Article;
 import com.face.callout.repository.ArticleRepository;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,7 +25,10 @@ public class ArticleController extends BaseController{
     @PostMapping(value = "/allArticles")
     @SuppressWarnings("unchecked")
     public RestResult allArticles(@RequestBody @Valid JSONObject data) {
-        Article[] articleList =  articleRepository.findAllByIsdeletedFalseOrderByCreatedAtDesc();
+        int page = data.getInt("pageIndex");
+        int size = data.getInt("pageSize");
+        Pageable pageable = new PageRequest(page, size);
+        Page<Article> articleList =  articleRepository.findAllByIsdeletedFalseOrderByCreatedAtDesc(pageable);
         return RestResultBuilder.builder().success(articleList).build();
     }
 
@@ -30,7 +36,10 @@ public class ArticleController extends BaseController{
     @PostMapping(value = "/allArticlesByUser")
     @SuppressWarnings("unchecked")
     public RestResult allArticlesByUser(@RequestBody @Valid JSONObject data) {
-        Article[] articleList =  articleRepository.findAllByCreatorAndIsdeletedFalseOrderByCreatedAtDesc(getCurrentUser());
+        int page = data.getInt("pageIndex");
+        int size = data.getInt("pageSize");
+        Pageable pageable = new PageRequest(page, size);
+        Page<Article> articleList =  articleRepository.findAllByCreatorAndIsdeletedFalseOrderByCreatedAtDesc(getCurrentUser(),pageable);
         return RestResultBuilder.builder().success(articleList).build();
     }
 

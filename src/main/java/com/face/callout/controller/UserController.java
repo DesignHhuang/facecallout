@@ -56,7 +56,7 @@ public class UserController extends BaseController {
     @PostMapping(value = "/updateAvatar")
     @SuppressWarnings("unchecked")
     public RestResult updateAvatar(@RequestBody @Valid JSONObject data) {
-        fastDFSClientWrapper.deleteFile(data.getString("oldurl"));
+        //fastDFSClientWrapper.deleteFile(data.getString("oldurl"));
         User user = userRepository.findOne(data.getLong("id"));
         user.setAvatar(data.getString("newurl"));
         userRepository.save(user);
@@ -89,4 +89,5 @@ public class UserController extends BaseController {
         }
         return RestResultBuilder.builder().success(files).build();
     }
+
 }
