@@ -17,6 +17,10 @@ public class Comment {
 
     private boolean isdeleted;
 
+    private int likesum;
+
+    private int commentsum;
+
     // 评论的文章
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "article_id", nullable = false)
@@ -78,5 +82,21 @@ public class Comment {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public int getLikesum() {
+        return likesum;
+    }
+
+    public void setLikesum(int likesum) {
+        this.likesum = likesum;
+    }
+
+    public int getCommentsum() {
+        return commentsum;
+    }
+
+    public void setCommentsum(int commentsum) {
+        this.commentsum = commentsum;
     }
 }

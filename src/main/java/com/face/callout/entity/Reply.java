@@ -17,6 +17,10 @@ public class Reply {
 
     private boolean isdeleted;
 
+    private int likesum;
+
+    private int commentsum;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "creator_id", nullable = false)
     private User creator;
@@ -77,5 +81,21 @@ public class Reply {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public int getLikesum() {
+        return likesum;
+    }
+
+    public void setLikesum(int likesum) {
+        this.likesum = likesum;
+    }
+
+    public int getCommentsum() {
+        return commentsum;
+    }
+
+    public void setCommentsum(int commentsum) {
+        this.commentsum = commentsum;
     }
 }

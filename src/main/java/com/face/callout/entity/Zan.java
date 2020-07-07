@@ -13,14 +13,14 @@ public class Zan {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //文章点赞，评论点赞，回复点赞
-    private String type;
+    //1文章点赞，2评论点赞，3回复点赞
+    private String typename;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "creator_id", nullable = false)
     private User creator;
 
-    private Long type_id;
+    private Long typeid;
 
     private boolean isdeleted;
 
@@ -38,12 +38,12 @@ public class Zan {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getTypename() {
+        return typename;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTypename(String typename) {
+        this.typename = typename;
     }
 
     public User getCreator() {
@@ -54,12 +54,12 @@ public class Zan {
         this.creator = creator;
     }
 
-    public Long getType_id() {
-        return type_id;
+    public Long getTypeid() {
+        return typeid;
     }
 
-    public void setType_id(Long type_id) {
-        this.type_id = type_id;
+    public void setTypeid(Long typeid) {
+        this.typeid = typeid;
     }
 
     public boolean isIsdeleted() {
